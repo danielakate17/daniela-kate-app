@@ -1,8 +1,10 @@
 import streamlit as st
 
-st.title("Mi primera app")
+st.title("Calculadora Básica")
 
-nombre = st.text_input("¿Cómo te llamas?")
+num1 = st.number_input("Primer número")
+num2 = st.number_input("Segundo número")
 
-if nombre:
-    st.write(f"Hola {nombre}, bienvenida a mi aplicación ❤️")
+suma = num1 + num2
+
+st.write("La suma es:", suma)
