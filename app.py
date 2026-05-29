@@ -9,10 +9,12 @@ st.set_page_config(
 # TÍTULO
 st.title("💼 Business Simulator")
 
-st.subheader("Simula la utilidad mensual de tu negocio")
+st.subheader(
+    "Simula la utilidad mensual de tu negocio"
+)
 
 st.write(
-    "Ingresa la información de los productos y gastos mensuales."
+    "Ingresa la información de tus productos y gastos mensuales."
 )
 
 # CANTIDAD DE PRODUCTOS
@@ -98,11 +100,37 @@ if st.button("📊 Calcular utilidad mensual"):
 
     ingresos_totales = 0
     costos_totales = 0
+    cantidad_total = 0
 
     st.header("📈 Resultados por Producto")
 
     for producto in productos:
 
+        # ICONOS AUTOMÁTICOS
+        nombre_lower = producto["nombre"].lower()
+
+        if "blusa" in nombre_lower:
+            icono = "👚"
+
+        elif "pantalon" in nombre_lower:
+            icono = "👖"
+
+        elif "zapato" in nombre_lower:
+            icono = "👟"
+
+        elif "maquillaje" in nombre_lower:
+            icono = "💄"
+
+        elif "perfume" in nombre_lower:
+            icono = "🧴"
+
+        elif "bolso" in nombre_lower:
+            icono = "👜"
+
+        else:
+            icono = "📦"
+
+        # CÁLCULOS
         ingreso = (
             producto["precio"]
             * producto["cantidad"]
@@ -117,15 +145,26 @@ if st.button("📊 Calcular utilidad mensual"):
 
         ingresos_totales += ingreso
         costos_totales += costo_total
+        cantidad_total += producto["cantidad"]
 
-        st.subheader(producto["nombre"])
+        # RESULTADOS DEL PRODUCTO
+        st.subheader(
+            f"{icono} {producto['nombre']}"
+        )
 
-        st.write(f"💰 Ingresos: S/ {ingreso}")
+        st.write(
+            f"💰 Ingresos: S/ {ingreso}"
+        )
 
-        st.write(f"🏭 Costos: S/ {costo_total}")
+        st.write(
+            f"🏭 Costos: S/ {costo_total}"
+        )
 
-        st.write(f"✅ Ganancia: S/ {ganancia}")
+        st.write(
+            f"✅ Ganancia: S/ {ganancia}"
+        )
 
+    # GASTOS TOTALES
     gastos_totales = (
         costos_totales
         + publicidad
@@ -146,6 +185,7 @@ if st.button("📊 Calcular utilidad mensual"):
         f"💸 Gastos mensuales totales: S/ {gastos_totales}"
     )
 
+    # UTILIDAD
     if utilidad > 0:
 
         st.success(
@@ -191,4 +231,15 @@ if st.button("📊 Calcular utilidad mensual"):
 
         st.write(
             f"📌 Margen de ganancia: {margen:.1f}%"
+        )
+
+    # PRECIO PROMEDIO
+    if cantidad_total > 0:
+
+        precio_promedio = (
+            ingresos_totales / cantidad_total
+        )
+
+        st.write(
+            f"📌 Precio promedio de venta: S/ {precio_promedio:.2f}"
         )
