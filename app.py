@@ -14,7 +14,7 @@ st.subheader(
 )
 
 st.write(
-    "Ingresa la información de tus productos y gastos mensuales."
+    "Ingresa la información de tus productos y costos mensuales."
 )
 
 # CANTIDAD DE PRODUCTOS
@@ -71,25 +71,25 @@ for i in range(cantidad_productos):
         "cantidad": cantidad
     })
 
-# GASTOS
-st.header("💸 Gastos Mensuales")
+# COSTOS FIJOS
+st.header("💸 Costos Fijos Mensuales")
 
 publicidad = st.number_input(
-    "📢 Gasto mensual en publicidad (S/)",
+    "📢 Publicidad (S/)",
     min_value=0,
     value=0,
     step=1
 )
 
 alquiler = st.number_input(
-    "🏢 Alquiler mensual (S/)",
+    "🏢 Alquiler (S/)",
     min_value=0,
     value=0,
     step=1
 )
 
 otros = st.number_input(
-    "💡 Otros gastos fijos mensuales (S/)",
+    "💡 Otros gastos fijos (S/)",
     min_value=0,
     value=0,
     step=1
@@ -99,16 +99,17 @@ otros = st.number_input(
 if st.button("📊 Calcular utilidad mensual"):
 
     ingresos_totales = 0
-    costos_totales = 0
+    costos_variables = 0
     cantidad_total = 0
 
     st.header("📈 Resultados por Producto")
 
     for producto in productos:
 
-        # ICONOS AUTOMÁTICOS
+        # NOMBRE EN MINÚSCULA
         nombre_lower = producto["nombre"].lower()
 
+        # ICONOS AUTOMÁTICOS
         if "blusa" in nombre_lower:
             icono = "👚"
 
@@ -231,10 +232,10 @@ if st.button("📊 Calcular utilidad mensual"):
         ganancia = ingreso - costo_total
 
         ingresos_totales += ingreso
-        costos_totales += costo_total
+        costos_variables += costo_total
         cantidad_total += producto["cantidad"]
 
-        # RESULTADOS DEL PRODUCTO
+        # RESULTADOS POR PRODUCTO
         st.subheader(
             f"{icono} {producto['nombre']}"
         )
@@ -244,28 +245,45 @@ if st.button("📊 Calcular utilidad mensual"):
         )
 
         st.write(
-            f"🏭 Costos: S/ {costo_total:,}"
+            f"🏭 Costos variables: S/ {costo_total:,}"
         )
 
         st.write(
             f"✅ Ganancia: S/ {ganancia:,}"
         )
 
-    # GASTOS TOTALES
-    gastos_totales = (
-        costos_totales
-        + publicidad
+    # COSTOS FIJOS
+    costos_fijos = (
+        publicidad
         + alquiler
         + otros
     )
 
-    utilidad = ingresos_totales - gastos_totales
+    # GASTOS TOTALES
+    gastos_totales = (
+        costos_variables
+        + costos_fijos
+    )
+
+    # UTILIDAD
+    utilidad = (
+        ingresos_totales
+        - gastos_totales
+    )
 
     # RESULTADOS FINALES
     st.header("📊 Resultados Finales")
 
     st.success(
         f"💰 Ingresos mensuales totales: S/ {ingresos_totales:,}"
+    )
+
+    st.write(
+        f"🏭 Costos variables totales: S/ {costos_variables:,}"
+    )
+
+    st.write(
+        f"💸 Costos fijos totales: S/ {costos_fijos:,}"
     )
 
     st.info(
@@ -329,4 +347,16 @@ if st.button("📊 Calcular utilidad mensual"):
 
         st.write(
             f"📌 Precio promedio de venta: S/ {precio_promedio:,.2f}"
+        )
+
+    # MARGEN DE CONTRIBUCIÓN
+    if ingresos_totales > 0:
+
+        margen_contribucion = (
+            (ingresos_totales - costos_variables)
+            / ingresos_totales
+        ) * 100
+
+        st.write(
+            f"📌 Margen de contribución: {margen_contribucion:.1f}%"
         )
