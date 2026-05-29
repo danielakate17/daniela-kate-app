@@ -127,6 +127,93 @@ if st.button("📊 Calcular utilidad mensual"):
         elif "bolso" in nombre_lower:
             icono = "👜"
 
+        elif "guitarra" in nombre_lower:
+            icono = "🎸"
+
+        elif "celular" in nombre_lower:
+            icono = "📱"
+
+        elif "laptop" in nombre_lower:
+            icono = "💻"
+
+        elif "computadora" in nombre_lower:
+            icono = "🖥️"
+
+        elif "audifono" in nombre_lower:
+            icono = "🎧"
+
+        elif "reloj" in nombre_lower:
+            icono = "⌚"
+
+        elif "camisa" in nombre_lower:
+            icono = "👔"
+
+        elif "vestido" in nombre_lower:
+            icono = "👗"
+
+        elif "falda" in nombre_lower:
+            icono = "🩳"
+
+        elif "gorra" in nombre_lower:
+            icono = "🧢"
+
+        elif "joya" in nombre_lower:
+            icono = "💍"
+
+        elif "collar" in nombre_lower:
+            icono = "📿"
+
+        elif "pizza" in nombre_lower:
+            icono = "🍕"
+
+        elif "hamburguesa" in nombre_lower:
+            icono = "🍔"
+
+        elif "cafe" in nombre_lower:
+            icono = "☕"
+
+        elif "helado" in nombre_lower:
+            icono = "🍦"
+
+        elif "pastel" in nombre_lower:
+            icono = "🎂"
+
+        elif "galleta" in nombre_lower:
+            icono = "🍪"
+
+        elif "pollo" in nombre_lower:
+            icono = "🍗"
+
+        elif "libro" in nombre_lower:
+            icono = "📚"
+
+        elif "pelota" in nombre_lower:
+            icono = "⚽"
+
+        elif "bicicleta" in nombre_lower:
+            icono = "🚲"
+
+        elif "carro" in nombre_lower:
+            icono = "🚗"
+
+        elif "moto" in nombre_lower:
+            icono = "🏍️"
+
+        elif "sofa" in nombre_lower:
+            icono = "🛋️"
+
+        elif "mesa" in nombre_lower:
+            icono = "🪑"
+
+        elif "lampara" in nombre_lower:
+            icono = "💡"
+
+        elif "flor" in nombre_lower:
+            icono = "🌸"
+
+        elif "mascota" in nombre_lower:
+            icono = "🐶"
+
         else:
             icono = "📦"
 
@@ -153,15 +240,15 @@ if st.button("📊 Calcular utilidad mensual"):
         )
 
         st.write(
-            f"💰 Ingresos: S/ {ingreso}"
+            f"💰 Ingresos: S/ {ingreso:,}"
         )
 
         st.write(
-            f"🏭 Costos: S/ {costo_total}"
+            f"🏭 Costos: S/ {costo_total:,}"
         )
 
         st.write(
-            f"✅ Ganancia: S/ {ganancia}"
+            f"✅ Ganancia: S/ {ganancia:,}"
         )
 
     # GASTOS TOTALES
@@ -178,18 +265,18 @@ if st.button("📊 Calcular utilidad mensual"):
     st.header("📊 Resultados Finales")
 
     st.success(
-        f"💰 Ingresos mensuales totales: S/ {ingresos_totales}"
+        f"💰 Ingresos mensuales totales: S/ {ingresos_totales:,}"
     )
 
     st.info(
-        f"💸 Gastos mensuales totales: S/ {gastos_totales}"
+        f"💸 Gastos mensuales totales: S/ {gastos_totales:,}"
     )
 
     # UTILIDAD
     if utilidad > 0:
 
         st.success(
-            f"✅ Utilidad mensual: S/ {utilidad}"
+            f"✅ Utilidad mensual: S/ {utilidad:,}"
         )
 
         st.balloons()
@@ -209,7 +296,7 @@ if st.button("📊 Calcular utilidad mensual"):
     elif utilidad < 0:
 
         st.error(
-            f"❌ Pérdida mensual: S/ {abs(utilidad)}"
+            f"❌ Pérdida mensual: S/ {abs(utilidad):,}"
         )
 
         st.write(
@@ -222,7 +309,7 @@ if st.button("📊 Calcular utilidad mensual"):
             "⚠️ No hay ganancias ni pérdidas"
         )
 
-    # MARGEN
+    # MARGEN DE GANANCIA
     if ingresos_totales > 0:
 
         margen = (
@@ -241,5 +328,5 @@ if st.button("📊 Calcular utilidad mensual"):
         )
 
         st.write(
-            f"📌 Precio promedio de venta: S/ {precio_promedio:.2f}"
+            f"📌 Precio promedio de venta: S/ {precio_promedio:,.2f}"
         )
