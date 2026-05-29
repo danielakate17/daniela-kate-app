@@ -1,25 +1,33 @@
 import streamlit as st
 
 # CONFIGURACIÓN
-st.set_page_config(page_title="Business Simulator", page_icon="💼")
+st.set_page_config(
+    page_title="Business Simulator",
+    page_icon="💼"
+)
 
 # TÍTULO
 st.title("💼 Business Simulator")
+
 st.subheader("Simula la utilidad mensual de tu negocio")
 
-st.write("Ingresa la información de los productos y gastos mensuales.")
+st.write(
+    "Ingresa la información de los productos y gastos mensuales."
+)
 
-# PRODUCTOS
-st.header("📦 Productos")
+# CANTIDAD DE PRODUCTOS
+cantidad_productos = st.number_input(
+    "📦 ¿Cuántos productos vende tu negocio?",
+    min_value=1,
+    max_value=10,
+    value=1,
+    step=1
+)
 
 productos = []
 
-cantidad_productos = st.number_input(
-    "¿Cuántos productos vende tu negocio?",
-    min_value=1,
-    max_value=10,
-    value=3
-)
+# PRODUCTOS
+st.header("📦 Productos")
 
 for i in range(cantidad_productos):
 
@@ -31,20 +39,26 @@ for i in range(cantidad_productos):
     )
 
     precio = st.number_input(
-        f"Precio de venta del producto {i + 1} (S/)",
-        min_value=0.0,
+        f"💲 Precio de venta del producto {i + 1} (S/)",
+        min_value=0,
+        value=0,
+        step=1,
         key=f"precio{i}"
     )
 
     costo = st.number_input(
-        f"Costo por unidad del producto {i + 1} (S/)",
-        min_value=0.0,
+        f"🏭 Costo por unidad del producto {i + 1} (S/)",
+        min_value=0,
+        value=0,
+        step=1,
         key=f"costo{i}"
     )
 
     cantidad = st.number_input(
-        f"Cantidad vendida del producto {i + 1}",
+        f"📦 Cantidad vendida del producto {i + 1}",
         min_value=0,
+        value=0,
+        step=1,
         key=f"cantidad{i}"
     )
 
@@ -55,22 +69,28 @@ for i in range(cantidad_productos):
         "cantidad": cantidad
     })
 
-# GASTOS FIJOS
+# GASTOS
 st.header("💸 Gastos Mensuales")
 
 publicidad = st.number_input(
     "📢 Gasto mensual en publicidad (S/)",
-    min_value=0.0
+    min_value=0,
+    value=0,
+    step=1
 )
 
 alquiler = st.number_input(
     "🏢 Alquiler mensual (S/)",
-    min_value=0.0
+    min_value=0,
+    value=0,
+    step=1
 )
 
 otros = st.number_input(
     "💡 Otros gastos fijos mensuales (S/)",
-    min_value=0.0
+    min_value=0,
+    value=0,
+    step=1
 )
 
 # BOTÓN
@@ -83,22 +103,28 @@ if st.button("📊 Calcular utilidad mensual"):
 
     for producto in productos:
 
-        ingreso = producto["precio"] * producto["cantidad"]
+        ingreso = (
+            producto["precio"]
+            * producto["cantidad"]
+        )
 
-        costo_total = producto["costo"] * producto["cantidad"]
+        costo_total = (
+            producto["costo"]
+            * producto["cantidad"]
+        )
 
         ganancia = ingreso - costo_total
 
         ingresos_totales += ingreso
         costos_totales += costo_total
 
-        st.write(f"### {producto['nombre']}")
+        st.subheader(producto["nombre"])
 
-        st.write(f"💰 Ingresos: S/ {ingreso:.2f}")
+        st.write(f"💰 Ingresos: S/ {ingreso}")
 
-        st.write(f"🏭 Costos: S/ {costo_total:.2f}")
+        st.write(f"🏭 Costos: S/ {costo_total}")
 
-        st.write(f"✅ Ganancia: S/ {ganancia:.2f}")
+        st.write(f"✅ Ganancia: S/ {ganancia}")
 
     gastos_totales = (
         costos_totales
@@ -112,34 +138,57 @@ if st.button("📊 Calcular utilidad mensual"):
     # RESULTADOS FINALES
     st.header("📊 Resultados Finales")
 
-    st.success(f"💰 Ingresos mensuales totales: S/ {ingresos_totales:.2f}")
+    st.success(
+        f"💰 Ingresos mensuales totales: S/ {ingresos_totales}"
+    )
 
-    st.info(f"💸 Gastos mensuales totales: S/ {gastos_totales:.2f}")
+    st.info(
+        f"💸 Gastos mensuales totales: S/ {gastos_totales}"
+    )
 
     if utilidad > 0:
 
-        st.success(f"✅ Utilidad mensual: S/ {utilidad:.2f}")
+        st.success(
+            f"✅ Utilidad mensual: S/ {utilidad}"
+        )
 
         st.balloons()
 
         if utilidad >= 1000:
-            st.write("🟢 Tu negocio es rentable")
+
+            st.write(
+                "🟢 Tu negocio es rentable"
+            )
+
         else:
-            st.write("🟡 Tu negocio genera ganancias, pero puede mejorar")
+
+            st.write(
+                "🟡 Tu negocio genera ganancias, pero puede mejorar"
+            )
 
     elif utilidad < 0:
 
-        st.error(f"❌ Pérdida mensual: S/ {abs(utilidad):.2f}")
+        st.error(
+            f"❌ Pérdida mensual: S/ {abs(utilidad)}"
+        )
 
-        st.write("🔴 Necesitas reducir gastos o aumentar ventas")
+        st.write(
+            "🔴 Necesitas reducir gastos o aumentar ventas"
+        )
 
     else:
 
-        st.warning("⚠️ No hay ganancias ni pérdidas")
+        st.warning(
+            "⚠️ No hay ganancias ni pérdidas"
+        )
 
     # MARGEN
     if ingresos_totales > 0:
 
-        margen = (utilidad / ingresos_totales) * 100
+        margen = (
+            utilidad / ingresos_totales
+        ) * 100
 
-        st.write(f"📌 Margen de ganancia: {margen:.1f}%")
+        st.write(
+            f"📌 Margen de ganancia: {margen:.1f}%"
+        )
